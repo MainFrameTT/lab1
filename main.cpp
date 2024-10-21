@@ -55,6 +55,36 @@ struct Pipe {
         cout << "Under repair: " << (in_repair ? "Yes" : "No") << endl;
     }
 
+    double inputDouble(const string& prompt) {
+        double value;
+        while (true) {
+            cout << prompt;
+            cin >> value;
+            if (cin.fail() || value < 0) {  // Проверка на некорректный ввод
+                cin.clear(); // Очистка флага ошибки
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Игнорирование некорректного ввода
+                cout << "Некорректное значение. Введите положительное число." << endl;
+            } else {
+                return value;
+            }
+        }
+    }
+
+    bool inputBool(const string& prompt) {
+        int value;
+        while (true) {
+            cout << prompt;
+            cin >> value;
+            if (cin.fail() || (value != 1 && value != 0)) {
+                cin.clear(); // Очистка флага ошибки
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Некорректное значение. Введите 1 (да) или 0 (нет)." << endl;
+            } else {
+                return value == 1;
+            }
+        }
+    }
+
     void read() {
         cout << "Enter the name of the pipe: ";
         cin >> name;
