@@ -122,6 +122,21 @@ struct CompressorStation {
 Pipe pipe;
 CompressorStation compressorStation;
 
+void saveData(string filename) {
+    ofstream outfile(filename);
+    if (outfile.is_open()) {
+        outfile << "Pipe:" << endl;
+        outfile << pipe.name << "," << pipe.length << "," << pipe.diameter << "," << (pipe.in_repair ? "1" : "0") << endl;
+
+        outfile << "CompressorStation:" << endl;
+        outfile << compressorStation.name << "," << compressorStation.num_shops << "," << compressorStation.working_shops << "," << compressorStation.efficiency << endl;
+        outfile.close();
+        cout << "Данные сохранены в файл " << filename << endl;
+    } else {
+        cout << "Ошибка при открытии файла!" << endl;
+    }
+}
+
 void loadData(string filename) {
     ifstream infile(filename);
     if (infile.is_open()) {
