@@ -81,6 +81,9 @@ struct CompressorStation {
 
     CompressorStation() : name(""), num_shops(0), working_shops(0), efficiency(0) {}
 
+    CompressorStation(string n, int shops, int working, double eff)
+        : name(n), num_shops(shops), working_shops(working), efficiency(eff) {}
+
     void print() {
         cout << "Название КС: " << name << endl;
         cout << "Количество цехов: " << num_shops << endl;
