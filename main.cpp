@@ -171,3 +171,69 @@ void loadData(string filename) {
     }
 }
 
+void showMenu() {
+    cout << "Меню:" << endl;
+    cout << "1. Добавить трубу" << endl;
+    cout << "2. Добавить КС" << endl;
+    cout << "3. Просмотреть все объекты" << endl;
+    cout << "4. Редактировать трубу" << endl;
+    cout << "5. Редактировать КС" << endl;
+    cout << "6. Сохранить" << endl;
+    cout << "7. Загрузить" << endl;
+    cout << "0. Выход" << endl;
+    cout << "Введите ваш выбор: ";
+}
+
+void handleChoice() {
+    int choice = safeIntInput("");
+    switch (choice) {
+    case 1:
+        pipe.read();
+        cout << "Труба добавлена!" << endl;
+        break;
+    case 2:
+        compressorStation.read();
+        cout << "КС добавлена!" << endl;
+        break;
+    case 3:
+        cout << "---- Труба ----" << endl;
+        pipe.print();
+        cout << "---- КС ----" << endl;
+        compressorStation.print();
+        break;
+    case 4:
+        pipe.setRepair(safeIntInput("В ремонте? (1 - да, 0 - нет): ") == 1);
+        cout << "Труба обновлена!" << endl;
+        break;
+    case 5: {
+        int action = safeIntInput("1. Запустить цех\n2. Остановить цех\nВведите действие: ");
+        if (action == 1) {
+            compressorStation.startShop();
+        } else if (action == 2) {
+            compressorStation.stopShop();
+        } else {
+            cout << "Неправильный выбор!" << endl;
+        }
+        break;
+    }
+    case 6:
+        saveData("data.txt");
+        break;
+    case 7:
+        loadData("data.txt");
+        break;
+    case 0:
+        cout << "Выход из программы..." << endl;
+        exit(0);
+    default:
+        cout << "Неправильный выбор!" << endl;
+        break;
+    }
+}
+
+int main() {
+    while (true) {
+        showMenu();
+        handleChoice();
+    }
+}
