@@ -1,10 +1,11 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <limits>
+#include <iostream> //ввод/вывод
+#include <fstream> //работа с файлами
+#include <string> //работа со строками
+#include <limits> //пределы типов данных
 
-using namespace std;
+using namespace std; //пространство имен
 
+//проверка
 int safeIntInput(const string& prompt) {
     int value;
     while (true) {
@@ -21,6 +22,7 @@ int safeIntInput(const string& prompt) {
     }
 }
 
+//проверка
 double safeDoubleInput(const string& prompt) {
     double value;
     while (true) {
@@ -37,6 +39,7 @@ double safeDoubleInput(const string& prompt) {
     }
 }
 
+//Определение трубы
 struct Pipe {
     string name;
     double length;
@@ -67,6 +70,7 @@ struct Pipe {
     }
 };
 
+//Определение КС
 struct CompressorStation {
     string name;
     int num_shops;
@@ -116,9 +120,11 @@ struct CompressorStation {
     }
 };
 
+//Объявление глобальных переменных
 Pipe pipe;
 CompressorStation compressorStation;
 
+//Сохранение данных в файл
 void saveData(const string& filename) {
     ofstream outfile(filename);
     if (outfile.is_open()) {
@@ -134,6 +140,7 @@ void saveData(const string& filename) {
     }
 }
 
+//Загрузка данных из файла
 void loadData(const string& filename) {
     ifstream infile(filename);
     if (infile.is_open()) {
@@ -183,6 +190,7 @@ void loadData(const string& filename) {
     }
 }
 
+//Отображение меню
 void showMenu() {
     cout << "Меню:" << endl;
     cout << "1. Добавить трубу" << endl;
@@ -196,6 +204,7 @@ void showMenu() {
     cout << "Введите ваш выбор: ";
 }
 
+//Обработка выбора пользователя
 void handleChoice() {
     int choice = safeIntInput("");
     switch (choice) {
@@ -243,6 +252,7 @@ void handleChoice() {
     }
 }
 
+//Инициализация
 int main() {
     while (true) {
         showMenu();
