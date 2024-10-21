@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int safeintInput(string promt) {
+int safeIntInput(string promt) {
     int value;
     while (true) {
         cout << promt;
@@ -21,7 +21,7 @@ int safeintInput(string promt) {
     }
 }
 
-int safedoubleInput(string promt) {
+int safeDoubleInput(string promt) {
     double value;
     while (true) {
         cout << promt;
@@ -72,4 +72,53 @@ struct Pipe {
         in_repair = r;
     }
 };
+
+struct CompressorStation {
+    string name;
+    int num_shops;
+    int working_shops;
+    double efficiency;
+
+    CompressorStation() : name(""), num_shops(0), working_shops(0), efficiency(0) {}
+
+    void print() {
+        cout << "Название КС: " << name << endl;
+        cout << "Количество цехов: " << num_shops << endl;
+        cout << "Цехов в работе: " << working_shops << endl;
+        cout << "Эффективность: " << efficiency << endl;
+    }
+
+    void read() {
+        cout << "Введите название КС: ";
+        getline(cin, name);
+        num_shops = safeIntInput("Введите количество цехов: ");
+        working_shops = safeIntInput("Введите количество работающих цехов: ");
+        while (working_shops > num_shops) {
+            cout << "Ошибка: количество работающих цехов не может превышать общее количество цехов!" << endl;
+            working_shops = safeIntInput("Введите количество работающих цехов: ");
+        }
+        efficiency = safeDoubleInput("Введите эффективность КС: ");
+    }
+
+    void startShop() {
+        if (working_shops < num_shops) {
+            working_shops++;
+            cout << "Цех запущен!" << endl;
+        } else {
+            cout << "Все цеха уже работают!" << endl;
+        }
+    }
+
+    void stopShop() {
+        if (working_shops > 0) {
+            working_shops--;
+            cout << "Цех остановлен!" << endl;
+        } else {
+            cout << "Все цеха уже остановлены!" << endl;
+        }
+    }
+};
+
+Pipe pipe;
+CompressorStation compressorStation;
 
