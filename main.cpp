@@ -5,96 +5,63 @@
 
 using namespace std;
 
-int safeIntInput(string promt) {
+int safeIntInput(const string& prompt) {
     int value;
     while (true) {
-        cout << promt;
+        cout << prompt;
         cin >> value;
         if (cin.fail() || value < 0) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Введите положительное, целое число" << endl;
+            cout << "Введите положительное целое число." << endl;
         } else {
-            cin.ignore(numeric_limits<streamsize>::max(), '\n' );
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             return value;
         }
     }
 }
 
-int safeDoubleInput(string promt) {
+double safeDoubleInput(const string& prompt) {
     double value;
     while (true) {
-        cout << promt;
+        cout << prompt;
         cin >> value;
         if (cin.fail() || value < 0) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Введите положительное, целое число" << endl;
+            cout << "Введите положительное число." << endl;
         } else {
-            cin.ignore(numeric_limits<streamsize>::max(), '\n' );
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             return value;
         }
     }
 }
-
 
 struct Pipe {
     string name;
     double length;
     double diameter;
     bool in_repair;
-    
+
     Pipe() : name(""), length(0), diameter(0), in_repair(false) {}
-    
+
     Pipe(string n, double l, double d, bool r) : name(n), length(l), diameter(d), in_repair(r) {}
-    
+
     void print() {
-        cout << "Name: " << name << endl;
-        cout << "Length: " << length << " km" << endl;
-        cout << "Diameter: " << diameter << " mm" << endl;
-        cout << "Under repair: " << (in_repair ? "Yes" : "No") << endl;
+        cout << "Название: " << name << endl;
+        cout << "Длина: " << length << " km" << endl;
+        cout << "Диаметр: " << diameter << " mm" << endl;
+        cout << "В ремонте: " << (in_repair ? "Да" : "Нет") << endl;
     }
-    
-    // Функция для проверки корректности ввода целого числа
-    double inputDouble(const string& prompt) {
-        double value;
-        while (true) {
-            cout << prompt;
-            cin >> value;
-            if (cin.fail() || value < 0) {  // Проверка на некорректный ввод
-                cin.clear(); // Очистка флага ошибки
-                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Игнорирование некорректного ввода
-                cout << "Некорректное значение. Введите положительное число." << endl;
-            } else {
-                return value;
-            }
-        }
-    }
-    
-    // Функция для ввода логического значения (да/нет)
-    bool inputBool(const string& prompt) {
-        int value;
-        while (true) {
-            cout << prompt;
-            cin >> value;
-            if (cin.fail() || (value != 1 && value != 0)) {
-                cin.clear(); // Очистка флага ошибки
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "Некорректное значение. Введите 1 (да) или 0 (нет)." << endl;
-            } else {
-                return value == 1;
-            }
-        }
-    }
-    
+
     void read() {
-        cout << "Enter the name of the pipe: ";
-        cin >> name;
-        length = inputDouble("Enter the length of the pipe (in km): ");
-        diameter = inputDouble("Enter the pipe diameter (in mm): ");
-        in_repair = inputBool("Under repair? (1 - yes, 0 - no): ");
+        cout << "Введите название трубы: ";
+        getline(cin, name);
+        length = safeDoubleInput("Введите длину трубы (в км): ");
+        diameter = safeDoubleInput("Введите диаметр трубы (в мм): ");
+        in_repair = safeIntInput("В ремонте? (1 - да, 0 - нет): ") == 1;
     }
-    
+
     void setRepair(bool r) {
         in_repair = r;
     }
@@ -152,7 +119,7 @@ struct CompressorStation {
 Pipe pipe;
 CompressorStation compressorStation;
 
-void saveData(string filename) {
+void saveData(const string& filename) {
     ofstream outfile(filename);
     if (outfile.is_open()) {
         outfile << "Pipe:" << endl;
@@ -167,7 +134,7 @@ void saveData(string filename) {
     }
 }
 
-void loadData(string filename) {
+void loadData(const string& filename) {
     ifstream infile(filename);
     if (infile.is_open()) {
         string line;
