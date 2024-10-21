@@ -122,3 +122,52 @@ struct CompressorStation {
 Pipe pipe;
 CompressorStation compressorStation;
 
+void loadData(string filename) {
+    ifstream infile(filename);
+    if (infile.is_open()) {
+        string line;
+        string type;
+        while (getline(infile, line)) {
+            if (line.find("Pipe:") != string::npos) {
+                type = "Pipe";
+                continue;
+            } else if (line.find("CompressorStation:") != string::npos) {
+                type = "CompressorStation";
+                continue;
+            }
+
+            if (type == "Pipe") {
+                string name, lengthStr, diameterStr, repairStr;
+                int commaIndex = line.find(',');
+                name = line.substr(0, commaIndex);
+                line = line.substr(commaIndex + 1);
+                commaIndex = line.find(',');
+                lengthStr = line.substr(0, commaIndex);
+                line = line.substr(commaIndex + 1);
+                commaIndex = line.find(',');
+                diameterStr = line.substr(0, commaIndex);
+                repairStr = line.substr(commaIndex + 1);
+
+                pipe = Pipe(name, stod(lengthStr), stod(diameterStr), repairStr == "1");
+            } else if (type == "CompressorStation") {
+                string name, numShopsStr, workingShopsStr, efficiencyStr;
+                int commaIndex = line.find(',');
+                name = line.substr(0, commaIndex);
+                line = line.substr(commaIndex + 1);
+                commaIndex = line.find(',');
+                numShopsStr = line.substr(0, commaIndex);
+                line = line.substr(commaIndex + 1);
+                commaIndex = line.find(',');
+                workingShopsStr = line.substr(0, commaIndex);
+                efficiencyStr = line.substr(commaIndex + 1);
+
+                compressorStation = CompressorStation(name, stoi(numShopsStr), stoi(workingShopsStr), stod(efficiencyStr));
+            }
+        }
+        infile.close();
+        cout << "Данные загружены из файла " << filename << endl;
+    } else {
+        cout << "Ошибка при открытии файла!" << endl;
+    }
+}
+
