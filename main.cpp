@@ -28,7 +28,7 @@ double safeDoubleInput(const string& prompt) {
     while (true) {
         cout << prompt;
         cin >> value;
-        if (cin.fail() || value < 0) {
+        if (cin.fail() || value <= 0) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Введите положительное число." << endl;
